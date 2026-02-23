@@ -1,0 +1,50 @@
+<h2 class="title">MINHAS TAREFAS</h2>
+
+<ul>
+  <li *ngFor="let task of tasks" class="task-item">
+    <div class="text-left"> 
+      <span
+        *ngIf="!task.editing"
+        [ngClass]="{ 'completed-task': task.completed }"
+        (click)="startEdit(task)">
+        {{ task.title }}
+      </span>
+
+      <input
+        *ngIf="task.editing"
+        type="text"
+        [(ngModel)]="task.editingTitle"
+        (blur)="cancelEdit(task)"
+        (keyup.enter)="saveEdit(task)"
+        class="edit-input"
+      />
+    </div>
+
+    <div class="text-right">
+      <span *ngIf="task.completed" class="completed-status">CONCLUÍDA</span>
+      <span *ngIf="!task.completed" class="pending-status">PENDENTE</span>
+
+      <button class="toggle-btn" (click)="toggleTaskStatus(task)">
+        {{ task.completed ? '✖' : '✔' }}
+      </button>
+    </div>
+
+    <!-- 🔹 ALTERADO AQUI -->
+    <button
+      class="delete-btn"
+      (click)="askDelete(task)">
+      <img src="lixeira.png" alt="Excluir tarefa" class="delete-icon"/>
+    </button>
+  </li>
+</ul>
+
+<!-- 🔹 MODAL ADICIONADA -->
+<div *ngIf="confirmingDeleteId !== null" class="modal-overlay">
+  <div class="modal-box">
+    <p class="modal-text">TEM CERTEZA?</p>
+    <div class="modal-buttons">
+      <button class="confirm-yes" (click)="confirmDelete()">SIM</button>
+      <button class="confirm-no" (click)="cancelDelete()">NÃO</button>
+    </div>
+  </div>
+</div>

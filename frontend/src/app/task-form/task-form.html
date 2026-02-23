@@ -1,0 +1,17 @@
+<h2 class="title">NOVA TAREFA</h2>
+
+<form (ngSubmit)="salvarTarefa()">
+    <label for="title">TÍTULO: </label>
+    <input 
+    id="title" 
+    type="text"
+    [(ngModel)] = "taskTitle"
+    name="title"
+    placeholder="Digite uma tarefa.."
+    required
+    >
+     <button type="submit">salvar</button>
+
+    <p *ngIf="mensagem" [ngClass]="mensagemTipo"> {{ mensagem }} </p>
+
+</form>
